@@ -39,12 +39,26 @@
                     <div class="add-to-cart-button">
                         <form method="POST" action="{% url 'add_to_cart' product.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="add-to-cart-button">Add to cart</button>
+                            <button type="submit" class="add-to-cart-button"> Add to cart  </button>
+                        </form>
+                    </div>
+                    <div class="add-to-cart-button">
+                        {% comment %} <a href="{% url 'rate_product' product.id %}" >Rate this product</a> {% endcomment %}
+                        <form method="POST" action="{% url 'rate_product' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-button">Rate this product</button>
                         </form>
                     </div>
                     
-                    <a href="{% url 'rate_product' product.id %}">Rate this product</a>
-                    <p><a href="{% url 'all_comment' product.id %}">Comment section</a></p>
+                    
+                    <div class="add-to-cart-button">
+                        {% comment %} <p><a href="{% url 'all_comment' product.id %}">Comment section</a></p> {% endcomment %}
+                        <form method="POST" action="{% url 'all_comment' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-button">Comments Section</button>
+                        </form>
+                    </div>
+                    
                 </div>
             </div>
         </div>
