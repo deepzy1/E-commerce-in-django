@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from app1.views import home,add_order,edit_order,signup,logout,search_view,Show_all_orderes,rate_product
+from app1.views import home,add_order,edit_order,signup,logout,search_view,Show_all_orderes,rate_product,about
 from app1.views import cart_view,add_to_cart,update_cart,remove_from_cart,checkout,clear_cart,view_product,add_comment,edit_comment,delete_comment,all_comment
 from django.contrib.auth.views import LoginView
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('home',home,name='home'),
     path('order/',add_order,name='add_order'),
     path('order<int:pk>/',edit_order,name='edit_order'),
+    path('about',about,name='about'),
     
 
     path('signup/', signup, name='signup'),
