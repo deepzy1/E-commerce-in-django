@@ -76,6 +76,19 @@ class OrderDetails(models.Model):
     def __str__(self):
         return f"Order {self.id} : User {self.user.username} : {self.product_name} x {self.quantity} : Total {self.total_price}"
     
+class OrderDetails1(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    total_price = models.DecimalField(max_digits=10, decimal_places=4, default=0.00)
+    product_name = models.CharField(max_length=255)
+    image=models.ImageField()
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=4)
+    order1=models.ForeignKey(Order,on_delete=models.CASCADE)
+    
+
+    def __str__(self):
+        return f"Order {self.id} : User {self.user.username} : {self.product_name} x {self.quantity} : Total {self.total_price}"
+    
 
 class Comments(models.Model):
     id_com=models.ForeignKey(Product,on_delete=models.CASCADE)

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render,redirect,get_object_or_404
-from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings
+from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings,OrderDetails1
 from app1.forms import Orderform,Signup_form,Login_form,SearchForm,CommentForm,Ratings_Form
 from django.contrib.auth import authenticate,login
 
@@ -229,7 +229,11 @@ def update_cart(request, cart_item_id):
     return render(request, 'app1/update_cart.html', {'form': form, 'cart_item': cart_item})
 
 
-
+def cart_view(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    total_price = cart.total_price
+    return render(request, 'app1/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
 @login_required
 def checkout(request):
@@ -238,12 +242,15 @@ def checkout(request):
     total_price = cart.total_price
     form_data = None
     
+    
+    
     if request.method == 'POST':
         form = Orderform(request.POST)
         if form.is_valid():
            
             form_data = form.cleaned_data  
             form.save()
+            
             for item in cart_items:
                 OrderDetails.objects.create(
                     user=request.user,
@@ -252,7 +259,8 @@ def checkout(request):
                     image=item.product.image,
                     quantity=item.quantity,
                     price=item.product.price,  
-        )
+                    )
+            
              
             
             

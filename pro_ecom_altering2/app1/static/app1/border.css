@@ -12,8 +12,8 @@
 }
 
 .product-image img {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     transition: transform 0.5s ease; /* Image scaling on hover */
 }
 

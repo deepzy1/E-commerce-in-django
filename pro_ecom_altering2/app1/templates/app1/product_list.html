@@ -50,7 +50,15 @@
                     {% csrf_token %}
                     <button type="submit" class="add-to-cart-button">Add to cart</button>
                 </form>
+                
+                
             </div>
+            <div class="add-to-cart-container">
+            <form method="POST" action="{% url 'view_product' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="add-to-cart-button" >View product</button>
+            </form>
+        </div>
         </div>
     {% endfor %}
 </div>
