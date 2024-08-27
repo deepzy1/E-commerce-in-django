@@ -17,6 +17,11 @@ def home(request):
     return render(request,'app1/home.html',{'products':products})
 
 
+def about(request):
+    return render(request, 'app1/about.html')
+
+
+
 def add_order(request):
     # form=Orderform()
     if request.method=='POST':
