@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <title>cart</title>
+    {% load static %}
+
+
+       
+<link rel="stylesheet" href="{% static 'app1/style2.css' %}">
+
+    
+    
+</ul>
+<h1>Order Success</h1>
+<h2> Product details</h2>
+<ul>
+    {% for items   in all_items  %}
+    <li>
+    <img src="{{ items.product.image.url }}" alt="{{ product.product_name }}">
+    <l1> Product name       :  {{ items.product.product_name}}</li>
+    <l1> Number of products :  {{items.quantity}} </li>
+    <h3> total price        :</h3> {{total_price}}
+    </li>
+
+    
+    {% endfor %}
+
+    
+    
+    <h2>USER Details</h2>
+    {% if form_data %}
+        <ul>
+            <li>Name: {{ form_data.name }}</li>
+            <li>Email: {{ form_data.email }}</li>
+            <li>Address: {{ form_data.address }}</li>
+            <li>City: {{ form_data.city }}</li>
+            <li>State: {{ form_data.state }}</li>
+            <li>Zip Code: {{ form_data.zip_code }}</li>
+            <li>Total Price: {{ form_data.total_price }}</li>
+        </ul>
+    {% else %}
+        <!-- Display the form if no data has been submitted -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Order</button>
+        </form>
+    {% endif %}
+    
+    
+    
+    <li><a href="{% url 'clear_cart' %}">continue shopping</a></li>
+    
+
+
+</body>
+</html>
+

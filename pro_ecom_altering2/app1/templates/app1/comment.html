@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep... Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/comment_section.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .comment-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.4s ease forwards;
+            animation-delay: calc(0.1s * var(--comment-index));
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comment-user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-text {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .add-comment-form {
+            margin-top: 30px;
+        }
+
+        .continue-shopping {
+            margin-top: 20px;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .continue-shopping:hover {
+            text-decoration: underline;
+        }
+
+        button.add-comment-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.add-comment-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}"><img src="{% static 'app1/images/DG.JPG' %}" height="60px"></a>
+        </nav>
+    </header>
+    <h1>All Comments</h1>
+    <div class="product-list">
+        {% for comment in comments %}
+            <div class="comment-container" style="--comment-index: {{ forloop.counter0 }}">
+                <p class="comment-text">{{ comment.comment }}</p>
+                {% if comment.user == request.user %}
+                    <div class="comment-user-actions">
+                        <a href="{% url 'edit_comment' comment.pk %}" class="edit-link">Edit</a>
+                        <a href="{% url 'delete_comment' comment.pk %}" class="delete-link">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% if comment.user == request.user and comment.pk == comment.pk %}
+        <form method="POST" action="{% url 'edit_comment' comment.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update Comment</button>
+        </form>
+    {% endif %}
+
+    <!-- Comment form for adding a new comment -->
+    <form method="POST" action="{% url 'add_comment' product.id %}" class="add-comment-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="add-comment-btn">Add Comment</button>
+    </form>
+
+    <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deep........ Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/comment_section.css' %}">
+    <header>
+        <nav>
+            <a href="{% url 'home' %}"><img src="{% static 'app1/images/dd1.PNG' %}" height="60px"></a>
+        </nav>
+    </header>
+</head>
+<body>
+    <h1>All Comments</h1>
+    <div class="product-list">
+        {% for comment in comments %}
+            <p>{{ comment.comment }}</p>
+            {% if comment.user == request.user %}
+                <a href="{% url 'edit_comment' comment.pk %}">Edit</a>
+                <a href="{% url 'delete_comment' comment.pk %}">Delete</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Separate form for editing an existing comment -->
+    {% if comment.user == request.user and comment.pk == comment.pk %}
+        <form method="POST" action="{% url 'edit_comment' comment.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update Comment</button>
+        </form>
+    {% endif %}
+    
+    <!-- Comment form for adding a new comment -->
+    <form method="POST" action="{% url 'add_comment' product.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+
+    <a href="{% url 'home' %}">Continue Shopping</a>
+</body>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

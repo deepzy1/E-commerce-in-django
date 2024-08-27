@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="{% static 'app1/search_style.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/border2.css' %}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'app1/images/DG.JPG' %}" alt="Home Logo" class="logo">
+        </a>
+    </nav>
+</header>
+
+<div class="search-container">
+    <form method="GET" action="{% url 'search_view' %}" class="search-form">
+        <input type="text" name="query" placeholder="Search for products..." value="{{ form.query.value }}" class="search-input">
+        <select name="category" class="search-select">
+            <option value="">All Categories</option>
+            {% for key, value in form.category.field.choices %}
+                <option value="{{ key }}" {% if form.category.value == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+<div class="product-list">
+    {% for product in products %}
+        <div class="product-item">
+            {% comment %} <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-image"> {% endcomment %}
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-image">
+                </div>
+            </div>
+
+            <h2 class="product-name">{{ product.product_name }}</h2>
+            <p class="product-price">₹{{ product.price }}</p>
+            <p class="product-category">{{ product.get_category_display }}</p>
+            <div class="add-to-cart-container">
+                <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart-button">Add to cart</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="home-link">
+    <a href="{% url 'home' %}">Home</a>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+<!DOCTYPE HTML>
+<html>
+    <body>
+        {% load static %}
+
+
+       
+<link rel="stylesheet" href="{% static 'app1/style2.css' %}">
+<header>
+    <nav>
+        <a href="{% url 'home' %}"><img src="{% static 'app1/images/dd1.PNG' %}" ></a>
+    </nav>
+</header>
+
+
+<div class="search-container">
+    <form method="GET" action="{% url 'search_view' %}"   font-size="30PX";>
+        <input type="text" name="query" placeholder="Search for products..." value="{{ form.query.value }}" class="search-input">
+        <select name="category" class="search-select">
+            <option value="">All Categories</option>
+            {% for key, value in form.category.field.choices %}
+                <option value="{{ key }}" {% if form.category.value == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+<div class="product-list">
+    {% for product in products %}
+        <div class="product-item">
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+            <h2>{{ product.product_name }}</h2>
+            <p>{{ product.price }}</p>
+            <p>{{ product.get_category_display }}</p>
+            {%
+            
+        </div>
+    {% endfor %}
+    <a href="{% url 'home' %}">Home</a>
+</div>
+
+
+</body>
+<html>
+
+ {% endcomment %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+    <title>Update Cart</title>
+</head>
+<body>
+    <h1>Update Cart</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+        <li><a href="{% url 'home' %}">continue shopping</a></li>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deepak shopping made easy...</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Deepak Cart</h1>
+            <ul>
+                {% comment %} <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Cart(0)</a></li> {% endcomment %}
+                {% comment %} <li><a href="#">Disabled</a></li> {% endcomment %}
+                {% comment %} <li><a href="{% url 'login_page' %}">Login</a></li> {% endcomment %}
+                <ul id="MenuItems">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    {% comment %} <li><a href="{% url 'cart_view' %}">Cart</a></li> {% endcomment %}
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'cart_view' %}">CART</a></li>
+                    {% comment %} {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li> {% endcomment %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'home' %}">My Order</a></li>
+                    
+                    {% endif %}
+    
+            </ul>
+        </nav>
+    </header>
+
+    <div class="search-container">
+        <form method="GET" action="{% url 'search_view' %}">
+            <input type="text" name="query" placeholder="Search for products..." value="{{ form.query.value }}" class="search-input">
+            <select name="category" class="search-select">
+                <option value="">All Categories</option>
+                {% for key, value in form.category.field.choices %}
+                    <option value="{{ key }}" {% if form.category.value == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+    
+    <div class="product-list">
+        
+    </div>
+
+    {% comment %} <div class="search-bar">
+        <form method="GET" action="{% url 'search' %}"> 
+            <form method="GET" action="{% url '#' %}">
+            <input type="text" name="q" placeholder="Search for products">
+            <button type="submit">Search</button>
+        </form>
+    </div> {% endcomment %}
+    {% comment %} <a href="{% url 'add_order' %}">Place Order</a>
+    <p></p> {% endcomment %}
+{% comment %} 
+    <a href="{% url 'sign_up' %}">Create Account</a>
+    <p></p><nav> {% endcomment %}
+        <h1>Deepak Cart</h1>
+        {% comment %} <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="{% url 'cart_view' %}">Cart(0)</a></li>
+            <li><a href="{% url 'add_order' %}">Place Order</a></li>
+            <li><a href="{% url 'sign_up' %}">Create Account</a></li>
+            <li><a href="{% url 'signup' %}">Login</a></li>
+            <ul id="MenuItems">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'cart_view' %}">Cart</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+
+            <li><a href="{% url 'cart_view' %}">View Cart</a></li>
+        </ul> {% endcomment %}
+    </nav>
+
+    {% comment %} <a href="{% url 'login_page' %}">Login</a>
+    <p></p> {% endcomment %}
+
+
+    <div class="product-list">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+            <h2>{{ product.product_name }}</h2>
+            <p>{{ product.price }}</p>
+            
+                    
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Add to cart</button>
+                    
+                </form>
+            {% else %}
+                <li><a href="{% url 'login' %}">Add to Cart</a></li>
+            {% endif %}
+            
+        </div>
+        {% endfor %}
+    </div> 
+
+    <footer>
+        <p>&copy; 2024 easy... Shopping
+            all rights are reserved
+        </p>
+    </footer>
+</body>
+</html>

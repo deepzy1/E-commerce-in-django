@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <title>cart</title>
+    {% load static %}
+
+
+       
+<link rel="stylesheet" href="{% static 'app1/style2.css' %}">
+
+    
+    <h1>Cart</h1>
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                {{ item.product.product_name }} ({{ item.quantity }})
+                {% comment %} item.product.image.url {% endcomment %}
+                <img src="{{ item.product.image.url }}" alt="{{ product.product_name }}">
+                <form action="{% url 'update_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}">
+                    <button type="submit">Update</button>
+                </form>
+                <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Total price: {{ total_price }}</p>
+    <form action="{% url 'checkout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Checkout</button>
+    </form>
+    <li><a href="{% url 'home' %}">continue shopping</a></li>
+    
+
+
+</body>
+</html>
+

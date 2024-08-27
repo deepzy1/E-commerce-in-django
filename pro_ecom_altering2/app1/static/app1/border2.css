@@ -1,0 +1,288 @@
+.product-card {
+    position: relative;
+    overflow: hidden;
+    border: 5px solid transparent; /* Initially, set the border to transparent */
+    transition: border-color 0.5s ease; /* Smooth transition for the border color */
+    box-shadow: 0 0 15px 5px transparent; /* Initially, set box-shadow to transparent */
+}
+
+.product-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.product-image img {
+    width: 220px;
+    height: 200px;
+    transition: transform 0.5s ease; /* Image scaling on hover */
+}
+
+.product-card:hover {
+    animation: borderColorChange 10s infinite; /* Animate the border and box-shadow colors */
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Keyframes to animate border color with 30 different colors */
+@keyframes borderColorChange {
+    0% {
+        border-color: rgba(255, 0, 0, 0.5); /* Red */
+        box-shadow: 0 0 15px 5px rgba(255, 165, 0, 0.5); /* Orange */
+    }
+    3.33% {
+        border-color: rgba(255, 165, 0, 0.5); /* Orange */
+        box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.5); /* Yellow */
+    }
+    6.66% {
+        border-color: rgba(255, 255, 0, 0.5); /* Yellow */
+        box-shadow: 0 0 15px 5px rgba(0, 128, 0, 0.5); /* Green */
+    }
+    10% {
+        border-color: rgba(0, 128, 0, 0.5); /* Green */
+        box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.5); /* Cyan */
+    }
+    13.33% {
+        border-color: rgba(0, 255, 255, 0.5); /* Cyan */
+        box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.5); /* Blue */
+    }
+    16.66% {
+        border-color: rgba(0, 0, 255, 0.5); /* Blue */
+        box-shadow: 0 0 15px 5px rgba(75, 0, 130, 0.5); /* Indigo */
+    }
+    20% {
+        border-color: rgba(75, 0, 130, 0.5); /* Indigo */
+        box-shadow: 0 0 15px 5px rgba(238, 130, 238, 0.5); /* Violet */
+    }
+    23.33% {
+        border-color: rgba(238, 130, 238, 0.5); /* Violet */
+        box-shadow: 0 0 15px 5px rgba(255, 20, 147, 0.5); /* Deep Pink */
+    }
+    26.66% {
+        border-color: rgba(255, 20, 147, 0.5); /* Deep Pink */
+        box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.5); /* Hot Pink */
+    }
+    30% {
+        border-color: rgba(255, 105, 180, 0.5); /* Hot Pink */
+        box-shadow: 0 0 15px 5px rgba(255, 69, 0, 0.5); /* Orange Red */
+    }
+    33.33% {
+        border-color: rgba(255, 69, 0, 0.5); /* Orange Red */
+        box-shadow: 0 0 15px 5px rgba(0, 255, 127, 0.5); /* Spring Green */
+    }
+    36.66% {
+        border-color: rgba(0, 255, 127, 0.5); /* Spring Green */
+        box-shadow: 0 0 15px 5px rgba(127, 255, 0, 0.5); /* Chartreuse */
+    }
+    40% {
+        border-color: rgba(127, 255, 0, 0.5); /* Chartreuse */
+        box-shadow: 0 0 15px 5px rgba(0, 250, 154, 0.5); /* Medium Spring Green */
+    }
+    43.33% {
+        border-color: rgba(0, 250, 154, 0.5); /* Medium Spring Green */
+        box-shadow: 0 0 15px 5px rgba(30, 144, 255, 0.5); /* Dodger Blue */
+    }
+    46.66% {
+        border-color: rgba(30, 144, 255, 0.5); /* Dodger Blue */
+        box-shadow: 0 0 15px 5px rgba(0, 191, 255, 0.5); /* Deep Sky Blue */
+    }
+    50% {
+        border-color: rgba(0, 191, 255, 0.5); /* Deep Sky Blue */
+        box-shadow: 0 0 15px 5px rgba(106, 90, 205, 0.5); /* Slate Blue */
+    }
+    53.33% {
+        border-color: rgba(106, 90, 205, 0.5); /* Slate Blue */
+        box-shadow: 0 0 15px 5px rgba(123, 104, 238, 0.5); /* Medium Slate Blue */
+    }
+    56.66% {
+        border-color: rgba(123, 104, 238, 0.5); /* Medium Slate Blue */
+        box-shadow: 0 0 15px 5px rgba(238, 232, 170, 0.5); /* Pale Goldenrod */
+    }
+    60% {
+        border-color: rgba(238, 232, 170, 0.5); /* Pale Goldenrod */
+        box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.5); /* Gold */
+    }
+    63.33% {
+        border-color: rgba(255, 215, 0, 0.5); /* Gold */
+        box-shadow: 0 0 15px 5px rgba(218, 165, 32, 0.5); /* Goldenrod */
+    }
+    66.66% {
+        border-color: rgba(218, 165, 32, 0.5); /* Goldenrod */
+        box-shadow: 0 0 15px 5px rgba(184, 134, 11, 0.5); /* Dark Goldenrod */
+    }
+    70% {
+        border-color: rgba(184, 134, 11, 0.5); /* Dark Goldenrod */
+        box-shadow: 0 0 15px 5px rgba(205, 92, 92, 0.5); /* Indian Red */
+    }
+    73.33% {
+        border-color: rgba(205, 92, 92, 0.5); /* Indian Red */
+        box-shadow: 0 0 15px 5px rgba(255, 160, 122, 0.5); /* Light Salmon */
+    }
+    76.66% {
+        border-color: rgba(255, 160, 122, 0.5); /* Light Salmon */
+        box-shadow: 0 0 15px 5px rgba(244, 164, 96, 0.5); /* Sandy Brown */
+    }
+    80% {
+        border-color: rgba(244, 164, 96, 0.5); /* Sandy Brown */
+        box-shadow: 0 0 15px 5px rgba(210, 105, 30, 0.5); /* Chocolate */
+    }
+    83.33% {
+        border-color: rgba(210, 105, 30, 0.5); /* Chocolate */
+        box-shadow: 0 0 15px 5px rgba(139, 69, 19, 0.5); /* Saddle Brown */
+    }
+    86.66% {
+        border-color: rgba(139, 69, 19, 0.5); /* Saddle Brown */
+        box-shadow: 0 0 15px 5px rgba(128, 0, 0, 0.5); /* Maroon */
+    }
+    90%
+
+
+
+
+.search-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25PX;
+        
+    }
+    
+    .search-input {
+        width: 60%;
+        padding: 15px;
+        font-size: 18px;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-select {
+        width: 32%;
+        padding: 15px;
+        font-size: 18px;
+        border: 1px solid #ddd;
+        border-left: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-button {
+        padding: 15px 25px;
+        font-size: 18px;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-button:hover {
+        background-color: #ff9900;
+    }
+    
+    @media (max-width: 768px) {
+        .search-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    
+        .search-input,
+        .search-select,
+        .search-button {
+            width: 100%;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    }
+
+
+    /* Button styling */
+    .btn-outline-dark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        border: 1px solid #6c757d;
+        color: #6c757d;
+        border-radius: 5px;
+        background-color: transparent;
+        transition: background-color 0.3s, color 0.3s;
+        text-decoration: none; /* Remove underline from link */
+    }
+    
+    .btn-outline-dark:hover {
+        background-color: #6c757d;
+        color: #fff;
+    }
+    
+    /* General Navbar Styles */
+.navbar {
+display: flex;
+justify-content: space-around; /* Space items evenly */
+align-items: center; /* Center items vertically */
+background-color: #000; /* Background color of navbar */
+padding: 10px 0; /* Padding for spacing */
+}
+
+/* Style for Nav Links */
+.nav-link {
+color: #fff; /* White text color for links */
+text-decoration: none; /* Remove underline from links */
+font-size: 1.2rem; /* Font size for navigation items */
+padding: 10px 20px; /* Padding for nav links */
+display: flex; /* Display as flex for alignment */
+align-items: center; /* Center items vertically */
+border-radius: 5px; /* Rounded corners for nav links */
+transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+/* Hover effect for nav links */
+.nav-link:hover {
+background-color: #333; /* Darker background on hover */
+}
+
+/* Cart-specific styles */
+.cart-link {
+background-color: transparent; /* Transparent background */
+border: 1px solid #fff; /* White border for cart link */
+border-radius: 5px; /* Rounded corners for cart link */
+padding: 10px 20px; /* Padding inside cart link */
+display: flex; /* Display as flex for alignment */
+align-items: center; /* Center items vertically */
+}
+
+/* Cart Icon Styles */
+.cart-icon {
+font-size: 1.5rem; /* Adjust size for the cart icon */
+color: #fff; /* White color for cart icon */
+}
+
+/* Cart Text Styles */
+.cart-text {
+font-size: 1rem; /* Adjust the size of the cart text */
+color: #fff; /* White color for cart text */
+margin-left: 8px; /* Space between icon and text */
+}
+
+/* Badge Styles for Cart Count */
+.badge {
+font-size: 0.8rem; /* Adjust badge text size */
+color: #fff; /* White color for badge text */
+background-color: red; /* Red background for badge */
+border-radius: 12px; /* Rounded shape for badge */
+padding: 4px 8px; /* Padding for badge */
+margin-left: 8px; /* Space between text and badge */
+}
+
+/* Align Navbar Items */
+ul {
+list-style: none; /* Remove default bullet points from list */
+padding: 0; /* Remove padding from list */
+margin: 0; /* Remove margin from list */
+display: flex; /* Display as flex for alignment */
+gap: 20px; /* Gap between navbar items */
+}

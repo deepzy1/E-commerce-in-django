@@ -1,0 +1,144 @@
+/* Reset default browser styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+header nav a .logo {
+    max-width: 100px;
+    height: auto;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.search-input,
+.search-select,
+.search-button {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #a60bee;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #f3b705;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 15px;
+    width: 300px;
+    text-align: center;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-name {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.product-price {
+    color: #f02400;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.product-category {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.home-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.home-link a {
+    text-decoration: none;
+    color: #337ab7;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.home-link a:hover {
+    color: #23527c;
+}
+
+
+
+/* Add to Cart Container Styling */
+.add-to-cart-container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    margin-top: 20px; /* Add some space above the container */
+}
+
+/* Add to Cart Button Styling */
+.add-to-cart-button {
+    padding: 10px 20px;
+    background-color: #28a745; /* A green color */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+    background-color: #218838; /* Slightly darker green for hover effect */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.add-to-cart-button:focus {
+    outline: none; /* Remove the default focus outline */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on focus */
+}
+
