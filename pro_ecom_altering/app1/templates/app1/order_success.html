@@ -1,0 +1,50 @@
+<!DOCTYPE html> {% load static %}
+<html>
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deepak.... Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+    <title>Order Success</title>
+</head>
+<body>
+    <h1>Order Success</h1>
+    <p>Your order has been successfully placed!</p>
+    <p>Order Details:</p>
+    <ul>
+        <li>Name: {{ request.user.username }}</li>
+        {% for user in form  %}
+        <li>
+            {{user.name}}
+            {{user.email}}
+            {{user.city}}
+            {{user.state}}
+        </li>
+        
+        {% endfor %}
+        {% comment %} <li>Email: {{ request.user.email }}</li>
+        <li>Address: {{ request.user.profile.address }}, {{ request.user.profile.city }}, {{ request.user.profile.state }} {{ request.user.profile.zip_code }}</li> {% endcomment %}
+    </ul>
+    <h1>Order Success</h1>
+    <h2> Product details</h2>
+    <ul>
+        {% for items   in all_items  %}
+        <li>
+        {{ items.product.product_name}}
+        {{items.quantity}}
+        <h3> total price</h3> {{total_price}}
+        </li>
+
+        
+        {% endfor %}
+
+
+    </ul>
+    
+
+<p>Your order has been successfully placed!</p>
+    <p>Thank you for shopping with us!</p>
+    <a href="{% url 'home' %}">Return to Home</a>
+</body>
+</html>

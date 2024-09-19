@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+    <body>
+       
+{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deep........ Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+
+
+{% comment %} {% block title %}Login{% endblock %} {% endcomment %}
+
+
+<header>
+    <nav>
+        <a href="{% url 'home' %}"><img src="{% static 'app1/images/DG.JPG' %}" height="60px"></a>
+    </nav>
+</header>
+        <div class="product-list">
+            {% for item in orders %}
+            <div class="product-list-item">
+                
+                <li>name :{{ item.user }}</li>
+                <img src="{{ item.image.url }}" alt="{{ item.product_name }}">
+                <li>product name  {{ item.product_name}}</li>
+                <li>product price  {{ item.price }}</li>
+                
+                <br><br><br>
+            
+            {% endfor %}
+            <br><br>
+            <li>total price  {{orders.total_price}}</li>
+            
+        </div>
+        <p>hello</p>
+        <style>
+            .continue-shopping {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #23527c;  /* Yellow color */
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+            
+            .continue-shopping:hover {
+                background-color: #FFC300;  /* Slightly darker yellow on hover */
+            }
+            </style>
+            
+            <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+{% comment %} {% endblock %} {% endcomment %}
+</body>
+</html>
+
+
+
+

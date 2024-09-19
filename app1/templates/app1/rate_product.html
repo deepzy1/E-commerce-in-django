@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/comment_section.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/rate_styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        :
+        header nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        header nav a img {
+            height: 60px;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        header nav a img:hover {
+            transform: scale(1.1); /* Slightly increase the size on hover */
+        }
+        
+        .product-rating {
+            width: 60%; /* Reduced the width from 80% to 60% */
+            max-width: 400px; /* Reduced the maximum width */
+            margin: 20px auto;
+            padding: 15px; /* Reduced padding to make the box smaller */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out; /* Fade in animation */
+        }
+        
+        .product-rating h2 {
+            font-size: 20px; /* Adjusted font size for smaller box */
+            margin-bottom: 10px;
+        }
+        
+        .product-image {
+            width: 80%; /* Reduced size to make the image smaller */
+            max-width: 250px; /* Further restriction on maximum width */
+            height: auto;
+            margin-bottom: 15px; /* Adjusted margin */
+            border: 1px solid #ddd; /* Adjusted border size */
+            border-radius: 8px; /* Rounded corners for the image */
+            transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+        
+        .rating-input {
+            margin: 10px 0;
+            text-align: left;
+        }
+        
+        .submit-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px; /* Reduced padding for smaller button */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px; /* Adjusted font size */
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+        }
+        
+        .submit-button:hover {
+            background-color: #218838;
+            transform: scale(1.05); /* Slightly enlarge button on hover */
+        }
+        
+        .rating {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+        
+        .rating i {
+            font-size: 1.5em;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+        
+        .rating i:hover,
+        .rating i.checked {
+            color: #f39c12; /* Change color on hover */
+        }
+        
+        .continue-shopping {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease; /* Smooth transition for text color */
+        }
+        
+        .continue-shopping:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #007bff;
+            bottom: 0;
+            left: -100%;
+            transition: left 0.3s ease; /* Animate underline */
+        }
+        
+        .continue-shopping:hover {
+            color: #0056b3; /* Darker color on hover */
+        }
+        
+        .continue-shopping:hover:after {
+            left: 0; /* Slide in underline */
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+
+        
+    </style>
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'app1/images/DG.JPG' %}" alt="Logo" height="60px">
+            </a>
+        </nav>
+    </header>
+
+    <div class="product-rating">
+        <h2>{{ product.product_name }}</h2>
+        <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-image">
+        <p>Average Rating: {{ average_rating|default:"Not rated Yet" }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="rating-input">
+                {{ form.rating.label_tag }}: {{ form.rating }}
+            </div>
+            <button type="submit" class="submit-button">Submit Rating</button>
+        </form>
+
+        <div class="rating">
+            {% for i in range %}
+                <i class="fas fa-star {% if i <= product.get_average_rating %}checked{% endif %}"></i>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        .continue-shopping {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #23527c;  /* Yellow color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .continue-shopping:hover {
+            background-color: #FFC300;  /* Slightly darker yellow on hover */
+        }
+        </style>
+        
+        <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE HTML>
+<html>
+    <body>
+       
+{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deep........ Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/comment_section.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <header>
+        <nav>
+            <a href="{% url 'home' %}"><img src="{% static 'app1/images/dd1.PNG' %}" height="60px"></a>
+        </nav>
+    </header>
+
+
+        <div class="product-rating">
+            <h2>{{ product.product_name}}</h2>
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-image">
+            <p> Average Rating: {{average_rating| default:"Not rated Yet"}}
+                <form method="post">
+                    {% csrf_token %}
+
+                    {{form.rating.label_tag }}:
+                    {{form.rating}}
+                    <br>
+                    
+                    <br>
+                    <button type="submit" >submit Rating</button>
+                </form>
+            </div>
+
+           
+
+            <div class="rating">
+               
+                
+                {% for i in range %}
+                        <i class="fas fa-star {% if i <= product.get_average_rating %}checked{% endif %}"></i>
+                {% endfor %}
+            
+            </div>
+            
+            <style>
+                .rating {
+                    display: inline-flex;
+                    flex-direction: row-reverse;
+                    justify-content: flex-start;
+                }
+                .rating i {
+                    font-size: 1.5em;
+                    color: #ddd;
+                    cursor: pointer;
+                }
+                .rating i.checked {
+                    color: #f39c12;
+                }
+            </style>
+            
+
+        <a href="{% url 'home' %}">continue shopping</a>
+
+</body>
+</html>
+
+
+
+ {% endcomment %}

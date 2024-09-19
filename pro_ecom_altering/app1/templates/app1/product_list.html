@@ -1,0 +1,44 @@
+<!-- product_list.html -->
+<!DOCTYPE HTML>
+<html>
+    <body>
+        {% load static %}
+
+
+       
+<link rel="stylesheet" href="{% static 'app1/style2.css' %}">
+
+
+<div class="search-container">
+    <form method="GET" action="{% url 'search_view' %}">
+        <input type="text" name="query" placeholder="Search for products..." value="{{ form.query.value }}" class="search-input">
+        <select name="category" class="search-select">
+            <option value="">All Categories</option>
+            {% for key, value in form.category.field.choices %}
+                <option value="{{ key }}" {% if form.category.value == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+<div class="product-list">
+    {% for product in products %}
+        <div class="product-item">
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+            <h2>{{ product.product_name }}</h2>
+            <p>{{ product.price }}</p>
+            <p>{{ product.get_category_display }}</p>
+            {% comment %} <a href="{% url 'product_detail' product.slug %}">View Details</a> {% endcomment %}
+            <a href="{% url 'home' %}">Home</a>
+            
+        </div>
+    {% endfor %}
+    <a href="{% url 'home' %}">Home</a>
+</div>
+
+
+</body>
+<html>
+
+

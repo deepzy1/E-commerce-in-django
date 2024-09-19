@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - Deepak Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/cart_style.css' %}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'app1/images/dd1.PNG' %}" height="60px" alt="Home">
+        </a>
+    </nav>
+</header>
+
+<div class="order-success-container cart-container">
+    <h1>Order Success</h1>
+    <p class="success-message">Your order has been successfully placed!</p>
+
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <ul>
+            <li>Name: {{ request.user.username }}</li>
+            {% for user in form %}
+            <li>{{ user.name }}</li>
+            <li>{{ user.email }}</li>
+            <li>{{ user.city }}</li>
+            <li>{{ user.state }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="product-details">
+        <h2>Product Details</h2>
+        <ul>
+            {% for items in all_items %}
+            <li>
+                <img src="{{ items.product.image.url }}" alt="{{ items.product.product_name }}" class="product-image">
+                <div class="product-info">
+                    <p>Product name: {{ items.product.product_name }}</p>
+                    <p>Number of products: {{ items.quantity }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="total-price">
+        <h3>Total Price:</h3>
+        <p>{{ total_price }}</p>
+    </div>
+
+    <p class="thank-you">Thank you for shopping with us!</p>
+    <a href="{% url 'home' %}" class="continue-shopping return-home">Return to Home</a>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+{% comment %} <!DOCTYPE html> {% load static %}
+<html>
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deepak.... Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+    <title>Order Success</title>
+</head>
+<body>
+    <h1>Order Success</h1>
+    <p>Your order has been successfully placed!</p>
+    <p>Order Details:</p>
+    <ul>
+        <li>Name: {{ request.user.username }}</li>
+        {% for user in form  %}
+        <li>
+            {{user.name}}
+            {{user.email}}
+            {{user.city}}
+            {{user.state}}
+        </li>
+        
+        {% endfor %}
+        
+    </ul>
+    <h1>Order Success</h1>
+    <h2> Product details</h2>
+    <ul>
+        {% for items   in all_items  %}
+        <li>
+        {{ items.product.product_name}}
+        {{items.quantity}}
+        <h3> total price</h3> {{total_price}}
+        </li>
+
+        
+        {% endfor %}
+
+
+    </ul>
+    
+
+<p>Your order has been successfully placed!</p>
+    <p>Thank you for shopping with us!</p>
+    <a href="{% url 'home' %}">Return to Home</a>
+</body>
+</html> {% endcomment %}
