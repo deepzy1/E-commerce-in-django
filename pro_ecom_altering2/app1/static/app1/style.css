@@ -1,0 +1,236 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* header {
+    background-color: #000000;
+    color: white;
+    padding: 10px 0;
+} */
+
+header {
+    background-color: #000000;
+    color: white;
+    padding: 10px 0;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+/* nav ul li a {
+    color: rgba(255, 255, 255, 0.486);
+    text-decoration: none;
+} */
+
+/* nav ul li a {
+    color: #fff;
+    text-decoration: none;
+} */
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+nav a {
+    max-width: 100%;
+    height: auto;
+}
+
+.search-bar {
+    margin: 20px auto;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    width: 23%;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.product-card h2 {
+    font-size: 18px;
+}
+
+.product-card p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* .logo {
+    height: 5px; 
+    width: auto;  
+    display: block;
+    margin: 0 auto;
+} */
+
+
+.product-card a,
+.product-card button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+
+.product-card button {
+    background-color: #07b5ff;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optional: Adjust height as needed */
+}
+
+.center-button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+
+/* Container for the product list */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between product cards */
+    padding: 20px;
+}
+
+/* Style for each product card */
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 250px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* Style for product images */
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Style for product name */
+.product-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Style for product price */
+.product-card p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Center buttons within the form */
+.product-card form {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Style for buttons */
+.product-card button,
+.product-card a {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff; /* Primary color */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Change button color on hover */
+.product-card button:hover,
+.product-card a:hover {
+    background-color: #0056b3; /* Darker shade */
+}
+
+/* Remove default styles for links */
+.product-card a {
+    text-decoration: none;
+}
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Deep... Shopping</title>
+        <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{% url 'home' %}"><img src="{% static 'app1/images/DG.JPG' %}" height="60px"></a>
+            </nav>
+        </header>
+        <div class="product-list">
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+                <h2>{{ product.product_name }}</h2>
+                <p>{{ product.price }}</p>
+                
+                <div class="product-detail">
+                    {% comment %} <h2>{{ product.product_name }}</h2> {% endcomment %}
+                    <div>
+                        {% comment %} Average Rating: <span>{{ average_rating|default:"Not rated yet" }}</span> {% endcomment %}
+                        Average Rating: <span>{{ average_rating|floatformat:2|default:"Not rated yet" }}</span>
+                        <div class="rating">
+                            {% for i in range %}
+                                <i class="fas fa-star {% if i <= average_rating %}checked{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% comment %} <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Add to cart</button>
+                    </form> {% endcomment %}
+
+                    <div class="add-to-cart-button">
+                        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-button">Add to cart</button>
+                        </form>
+                    </div>
+                    
+                    <a href="{% url 'rate_product' product.id %}">Rate this product</a>
+                    <p><a href="{% url 'all_comment' product.id %}">Comment section</a></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'home' %}">Continue shopping</a>
+        </div>
+
+        <style>
+            .rating {
+                display: inline-flex;
+                {% comment %} flex-direction: row-reverse; {% endcomment %}
+                justify-content: flex-start;
+                
+            }
+            .rating i {
+                font-size: 1.5em;
+                color: #ddd;
+                cursor: pointer;
+            }
+            .rating i.checked {
+                color: #f39c12;
+            }
+        </style>  
+    </body>
+</html>

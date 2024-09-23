@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deep........ Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/login_style2.css' %}">
+    {% comment %} <title>sign up page</title>
+    {% load static %}
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+
+<h1>create account</h1>
+  
+
+  
+  
+  <form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit...'>Sign Up</button>
+  </form> {% endcomment %}
+
+
+
+  {% comment %} {% block title %}Sign Up{% endblock %} {% endcomment %}
+  
+  {% block content %}
+      {% comment %} <h2>Sign Up</h2> {% endcomment %}
+      <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Sign Up</button>
+      </form>
+
+
+
+
+
+
+
+      
+      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+      
+  {% endblock %}
+
+
+</body>
+</html>
+

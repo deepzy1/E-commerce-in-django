@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - Cart</title>
+    <link rel="stylesheet" href="{% static 'app1/order_style.css' %}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="{% url 'clear_cart' %}">
+            <img src="{% static 'app1/images/DG.JPG' %}" height="50px" alt="Home">
+        </a>
+    </nav>
+</header>
+
+<div class="order-container">
+    <h1>Order Success</h1>
+    <h2>Product Details</h2>
+    <ul class="product-list">
+        {% for items in all_items %}
+        <li class="product-item">
+            <img src="{{ items.product.image.url }}" alt="{{ items.product.product_name }}" class="product-image">
+            <div class="product-info">
+                <p>Product name: {{ items.product.product_name }}</p>
+                <p>Number of products: {{ items.quantity }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="total-price">
+        <h3>Total Price:</h3>
+        <p>{{ total_price }}</p>
+    </div>
+
+    <h2>User Details</h2>
+    {% if form_data %}
+        <ul class="user-details">
+            <li>Name: {{ form_data.name }}</li>
+            <li>Email: {{ form_data.email }}</li>
+            <li>Address: {{ form_data.address }}</li>
+            <li>City: {{ form_data.city }}</li>
+            <li>State: {{ form_data.state }}</li>
+            <li>Zip Code: {{ form_data.zip_code }}</li>
+            <li>Total Price: {{ form_data.total_price }}</li>
+        </ul>
+    {% else %}
+        <form method="post" class="order-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-btn">Submit Order</button>
+        </form>
+    {% endif %}
+
+    <div class="continue-shopping">
+        <a href="{% url 'clear_cart' %}">Continue Shopping</a>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
+<html>
+<body>
+    <title>cart</title>
+    {% load static %}
+
+
+       
+<link rel="stylesheet" href="{% static 'app1/style2.css' %}">
+<header>
+    <nav>
+        <a href="{% url 'clear_cart' %}"><img src="{% static 'app1/images/dd1.PNG' %}" height="50px"></a>
+    </nav>
+</header>
+
+    
+    
+</ul>
+<h1>Order Success</h1>
+<h2> Product details..</h2>
+<ul>
+    {% for items   in all_items  %}
+    <li>
+    <img src="{{ items.product.image.url }}" alt="{{ product.product_name }}">
+    <br>
+    <l1> Product name       :  {{ items.product.product_name}}</li>
+    <l1> Number of products :  {{items.quantity}} </li>
+    
+    </li>
+
+    
+    {% endfor %}
+    <h3> total price        :</h3> {{total_price}}
+
+    
+    
+    <h2>USER Details</h2>
+    {% if form_data %}
+        <ul>
+            <li>Name: {{ form_data.name }}</li>
+            <li>Email: {{ form_data.email }}</li>
+            <li>Address: {{ form_data.address }}</li>
+            <li>City: {{ form_data.city }}</li>
+            <li>State: {{ form_data.state }}</li>
+            <li>Zip Code: {{ form_data.zip_code }}</li>
+            <li>Total Price: {{ form_data.total_price }}</li>
+        </ul>
+    {% else %}
+        <!-- Display the form if no data has been submitted -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Order</button>
+        </form>
+    {% endif %}
+    
+    
+    
+    <li><a href="{% url 'clear_cart' %}">continue shopping</a></li>
+    
+
+
+</body>
+</html>
+ {% endcomment %}
