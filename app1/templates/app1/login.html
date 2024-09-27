@@ -1,25 +1,12 @@
 <!DOCTYPE HTML>
 <html>
-    <body>
-        {% comment %}
-        <h2>login form </h2>
-        <form method = "post">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button class="btn btn-primary">Login</button>
-        </form>
-       
-    </body>
-</html> {% endcomment %}
+   <body>
 {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>deep........ Shopping</title>
     <link rel="stylesheet" href="{% static 'app1/login_style2.css' %}">
-
-
 {% comment %} {% block title %}Login{% endblock %} {% endcomment %}
-
 {% block content %}
     {% comment %} <h2>Login</h2>
     <div class="login"> {% endcomment %}

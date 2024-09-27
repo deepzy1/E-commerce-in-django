@@ -1,0 +1,316 @@
+{% comment %} {% load tz %}
+<style>
+    /* General Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Hover Effect */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Group Row Styles */
+.table-group {
+    background-color: #f7f7f7;
+}
+
+.table-group td {
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        font-size: 14px;
+    }
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+
+
+    
+.status-badge {
+    display: inline-block;
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-radius: 30px;
+    color: white;
+    background-color: #6c757d; /* Default grey color */
+    text-transform: capitalize;
+}
+
+/* Different colors for different statuses */
+.status-placed {
+    background-color: #007bff; /* Blue */
+}
+
+.status-left-warehouse {
+    background-color: #17a2b8; /* Teal */
+}
+
+.status-on-the-way {
+    background-color: #ffc107; /* Yellow */
+}
+
+.status-delivered {
+    background-color: #28a745; /* Green */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .status-badge {
+        font-size: 0.8em;
+        padding: 0.4em 0.8em;
+    }
+}
+</style> {% endcomment %}
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+{% load tz %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+        
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .order-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .order-info {
+            flex: 1;
+        }
+        
+        .order-number {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .order-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin: 0.25rem 0 0;
+        }
+        
+        .order-summary {
+            text-align: right;
+        }
+        
+        .order-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .status-delivered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-processing {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        
+        .order-total {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .order-details {
+            padding: 1rem;
+        }
+        
+        .order-items {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .order-items th,
+        .order-items td {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .order-items th {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .btn-continue-shopping {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-continue-shopping:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 600px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .order-summary {
+                text-align: left;
+                margin-top: 0.5rem;
+            }
+        
+            .order-items {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Order History</h2>
+        {% if orders %}
+        
+            {% for order in orders %}
+                <div class="order-card mb-4">
+                    <div class="order-header">
+                        {% comment %} <h5 class="order-number">Order #{{ order.id }} - {{ order.order_date|date:"F d, Y H:i" }}</h5> {% endcomment %}
+                        <p><strong>Total:</strong> ₹{{ order.total_price }}</p>
+                        <!-- Order Status with Badge Styling -->
+                        <p><strong>Status:</strong> 
+                            <span class="order-status status-{{ order.status|slugify }}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="order-details">
+                        <table class="order-items">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.get_items %}
+                                <tr>
+                                    <td>{{ item.product_name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>₹{{ item.price }}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+            
+        {% else %}
+            <p>You haven't placed any orders yet.</p>
+        {% endif %}
+        <a href="{% url 'home' %}" class="btn-continue-shopping">Continue Shopping</a>
+    </div>
+    {% endblock %}
+</body>
+</html>
+
+

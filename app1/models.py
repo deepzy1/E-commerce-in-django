@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
@@ -9,7 +10,7 @@ class Product(models.Model):
     cat=[('acc','Accessories'),('sports','Sports'),('bag','Bag'),('food','food'),('default','Default')]
     category=models.CharField(max_length=100,choices=cat)
     image=models.ImageField()
-    # slug = models.SlugField(unique=True)
+    
 
     def __str__(self):
         return str(self.id)+' '+self.product_name
@@ -51,7 +52,7 @@ class Cart(models.Model):
     # updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Cart {self.id} : name :{self.product_name}"
+        return f"Cart {self.id} : "
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
@@ -107,6 +108,59 @@ class Ratings(models.Model):
     class Meta:
         # onlu onee rating.. per user
         unique_together=('user','product')
+
+
+
+
+class OrderedItems2(models.Model):
+    STATUS_CHOICES = [
+        ('ordered', 'Order Placed'),
+        ('warehouse', 'Left Warehouse'),
+        ('on_the_way', 'On the Way'),
+        ('delivered', 'Delivered'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=20, decimal_places=2)
+    
+    # Store a list of product names, quantities, and prices
+    product_names = models.JSONField()  # Store a list of product names
+    quantities = models.JSONField()  # Store a list of quantities
+    prices = models.JSONField()  # Store a list of prices
+
+    # Add the status field
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ordered')
+
+    def __str__(self):
+        return f"Order {self.id} by {self.user.username} on {self.order_date}"
+
+    class Meta:
+        ordering = ['-order_date']
+
+    def get_items(self):
+        """Returns a list of dictionaries containing product names, quantities, and prices."""
+        return [
+            {
+                'product_name': name,
+                'quantity': quantity,
+                'price': price
+            }
+            for name, quantity, price in zip(self.product_names, self.quantities, self.prices)
+        ]
+
+    def set_items(self, items):
+        """Stores product names, quantities, and prices as JSON."""
+        self.product_names = [item['product_name'] for item in items]
+        self.quantities = [item['quantity'] for item in items]
+        self.prices = [str(item['price']) for item in items]  # Convert Decimal to string for JSON storage
+
+
+
+    
+
+
+
 
 
     

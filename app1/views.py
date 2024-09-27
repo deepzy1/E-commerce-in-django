@@ -1,26 +1,25 @@
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render,redirect,get_object_or_404
-from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings,OrderDetails1
+from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings,OrderDetails1,OrderedItems2
 from app1.forms import Orderform,Signup_form,Login_form,SearchForm,CommentForm,Ratings_Form
 from django.contrib.auth import authenticate,login
-
 from django.contrib.auth.decorators import login_required
 from .models import Cart, CartItem
 from .forms import CartForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout as auth_logout
+from django.contrib import messages
+from decimal import Decimal
+from django.utils import timezone
+from django.db import transaction
+from datetime import timedelta
 
-
-# Create your views here.
 def home(request):
     products=Product.objects.all()
     return render(request,'app1/home.html',{'products':products})
 
-
 def about(request):
     return render(request, 'app1/about.html')
-
-
 
 def add_order(request):
     # form=Orderform()
@@ -33,8 +32,6 @@ def add_order(request):
     else:
         form=Orderform()
     return render(request,'app1/order_form.html',{'form':form})
-
-
 
 def edit_order(request,pk):
     order=Order.objects.get(id=pk)
@@ -58,11 +55,9 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'app1/sign_up.html',{'form':form})
 
-
 def logout(request):
     auth_logout(request)
     return redirect('home')
-
 
 
 def view_product(request,product_id):
@@ -111,8 +106,6 @@ def add_comment(request, product_id):
         form = CommentForm()
 
     return render(request, 'app1/comment.html', {'form': form, 'product': product})
-
-
 
 
 def edit_comment(request, pk):
@@ -184,7 +177,6 @@ def rate_product(request,product_id):
     return render(request,'app1/rate_product.html',context)
     
 
-
 @login_required
 def cart_view(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -235,47 +227,127 @@ def cart_view(request):
     total_price = cart.total_price
     return render(request, 'app1/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
+# @login_required
+# def checkout(request):
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+#     cart_items = CartItem.objects.filter(cart=cart)
+#     total_price = cart.total_price
+#     form_data = None
+    
+    
+    
+#     if request.method == 'POST':
+#         form = Orderform(request.POST)
+#         if form.is_valid():
+           
+#             form_data = form.cleaned_data  
+#             form.save()
+            
+#             for item in cart_items:
+#                 OrderDetails.objects.create(
+#                     user=request.user,
+#                     total_price=cart.total_price,
+#                     product_name=item.product.product_name,
+#                     image=item.product.image,
+#                     quantity=item.quantity,
+#                     price=item.product.price,  
+#                     )  
+#     else:
+#         form = Orderform()
+
+#     context = {
+#         'all_items': cart_items,
+#         'total_price': total_price,
+#         'form': form,
+#         'form_data': form_data,  
+#     }
+   
+
+#     return render(request, 'app1/final_page.html', context)
+
+
+@login_required
+def order_success(request):
+    return render(request, 'app1/order_success2.html')
+
+
+
+
+
+
 @login_required
 def checkout(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
     total_price = cart.total_price
-    form_data = None
-    
-    
-    
+
+    if not cart_items.exists():
+        messages.warning(request, "Your cart is empty. Add some items before checking out.")
+        return redirect('cart_view')
+
     if request.method == 'POST':
         form = Orderform(request.POST)
         if form.is_valid():
-           
-            form_data = form.cleaned_data  
-            form.save()
-            
-            for item in cart_items:
-                OrderDetails.objects.create(
+            with transaction.atomic():
+                # Prepare items for the order
+                items = [
+                    {
+                        'product_name': item.product.product_name,
+                        'quantity': item.quantity,
+                        'price': item.product.price
+                    }
+                    for item in cart_items
+                ]
+
+                # Ensure items are not empty
+                if not items:
+                    messages.error(request, "There are no items to order.")
+                    return redirect('cart_view')
+
+                # Create a new Order
+                order = OrderedItems2(
                     user=request.user,
-                    total_price=cart.total_price,
-                    product_name=item.product.product_name,
-                    image=item.product.image,
-                    quantity=item.quantity,
-                    price=item.product.price,  
-                    )
-            
-             
-            
-            
+                    total_price=total_price
+                )
+
+                # Set the items for the order before saving
+                order.set_items(items)
+                order.save()
+
+                # Clear the cart
+                cart_items.delete()
+                cart.total_price = 0
+                cart.save()
+
+            messages.success(request, "Your order has been placed successfully!")
+            return redirect('order_success')
+        else:
+            messages.error(request, "There was an error with your order. Please check the form and try again.")
     else:
         form = Orderform()
 
     context = {
-        'all_items': cart_items,
+        'cart_items': cart_items,
         'total_price': total_price,
         'form': form,
-        'form_data': form_data,  
     }
-   
 
     return render(request, 'app1/final_page.html', context)
+
+
+
+
+
+# def order_history(request):
+#     # Fetch only the orders for the logged-in user
+#     orders = OrderedItems2.objects.filter(user=request.user)
+#     return render(request, 'app1/order_history.html', {'orders': orders})
+
+def order_history(request):
+    orders = OrderedItems2.objects.filter(user=request.user)
+    for order in orders:
+        order.order_date = order.order_date + timedelta(hours=5, minutes=30)  # Adjust to IST
+    return render(request, 'app1/order_history.html', {'orders': orders})
 
 
 def Show_all_orderes(request): 
@@ -294,9 +366,6 @@ def clear_cart(request):
 
 def All_orders(request):
     orders = Order.objects.all()
-
-
-# views.py
 
 def search_view(request):
     form = SearchForm(request.GET or None)

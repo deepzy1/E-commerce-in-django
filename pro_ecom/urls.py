@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from app1.views import home,add_order,edit_order,signup,logout,search_view,Show_all_orderes,rate_product,about
+from app1.views import home,add_order,edit_order,signup,logout,search_view,Show_all_orderes,rate_product,about,order_history,order_success
 from app1.views import cart_view,add_to_cart,update_cart,remove_from_cart,checkout,clear_cart,view_product,add_comment,edit_comment,delete_comment,all_comment
 from django.contrib.auth.views import LoginView
 
@@ -42,6 +42,8 @@ urlpatterns = [
 
 
     path('rate_product/<int:product_id>/',rate_product,name='rate_product'),
+    path('order-history/',order_history, name='order_history'),
+    path('order_succes/',order_success,name='order_success')
 
 
 

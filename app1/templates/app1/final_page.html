@@ -73,7 +73,11 @@
         }
         </style>
         
-        <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+        <a href="{% url 'clear_cart' %}" class="continue-shopping">Continue Shopping</a>
+
+        {% comment %} <div class="continue-shopping">
+            <a href="{% url 'clear_cart' %}">Continue Shopping</a>
+        </div> {% endcomment %}
 </div>
 
 </body>
