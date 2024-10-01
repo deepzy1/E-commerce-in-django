@@ -40,15 +40,13 @@
     <h2>User Details</h2>
     {% if form_data %}
         <ul class="user-details">
-
-            Name: {{ form_data.name }}
-            Email: {{ form_data.email }}
-            Address: {{ form_data.address }}
-            City: {{ form_data.city }}
-            State: {{ form_data.state }}
-            Zip Code: {{ form_data.zip_code }}
-            Total Price: {{ form_data.total_price }}
-           
+            <li>Name: {{ form_data.name }}</li>
+            <li>Email: {{ form_data.email }}</li>
+            <li>Address: {{ form_data.address }}</li>
+            <li>City: {{ form_data.city }}</li>
+            <li>State: {{ form_data.state }}</li>
+            <li>Zip Code: {{ form_data.zip_code }}</li>
+            <li>Total Price: {{ form_data.total_price }}</li>
         </ul>
     {% else %}
         <form method="post" class="order-form">

@@ -7,7 +7,7 @@
     <title>Deep Cart - Shopping Made Easy</title>
     <link rel="stylesheet" href="{% static 'app1/style4.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -27,18 +27,12 @@
                             {% endif %}
                         </a>
                     </li>
-                   
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
                     <li><a href="{% url 'order_history' %}">My Orders</a></li>
-                    {% comment %} <li><a href="{% url 'logout' %}">Logout</a></li> {% endcomment %}
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                 {% endif %}
                 <li><a href="{% url 'about' %}">About Us</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                
-                {% else %}
-                {% endif %}
             </ul>
         </nav>
     </header>

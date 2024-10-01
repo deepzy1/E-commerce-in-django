@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <title>Ordering</title>
+    {% load static %}
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+
+<h1>Add shippingn details</h1>
+  
+
+  
+{% comment %} <form action ="{% url 'BlogView' %}" method='post' > {% endcomment %}
+  <form action="{% url 'order_success' %}"  method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit'>Save</button>
+  </form>
+
+
+</body>
+</html>
+

@@ -193,7 +193,7 @@ body {
         }
         
         .status-delivered {
-            background-color: #1eea4f;
+            background-color: #d4edda;
             color: #155724;
         }
         
@@ -271,8 +271,7 @@ body {
             {% for order in orders %}
                 <div class="order-card mb-4">
                     <div class="order-header">
-                        {% comment %} {{ order.id }} {% endcomment %}
-                         <h5 class="order-number">Date  - {{ order.order_date|date:"F d, Y H:i" }}</h5> 
+                        {% comment %} <h5 class="order-number">Order #{{ order.id }} - {{ order.order_date|date:"F d, Y H:i" }}</h5> {% endcomment %}
                         <p><strong>Total:</strong> ₹{{ order.total_price }}</p>
                         <!-- Order Status with Badge Styling -->
                         <p><strong>Status:</strong> 

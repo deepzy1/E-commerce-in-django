@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cart</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'app1/checkout.css' %}">
+</head>
+<body>
+    <header class="bg-light py-3">
+        <div class="container">
+            <nav>
+                <a href="{% url 'clear_cart' %}">
+                    <img src="{% static 'app1/images/DG.JPG' %}" height="50px" alt="Home">
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container checkout-container">
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <section class="order-summary">
+                    <h2>Order Summary</h2>
+                    <ul class="list-unstyled">
+                        {% for item in all_items %}
+                        <li class="product-item">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.product_name }}" class="product-image">
+                            <div class="product-info">
+                                <h5>{{ item.product.product_name }}</h5>
+                                <p>Quantity: {{ item.quantity }}</p>
+                                <p>Price: ₹{{ item.product.price }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="total-price">
+                        <h4>Total Price: ₹{{ total_price }}</h4>
+                    </div>
+                </section>
+
+                <form method="post" class="order-form">
+                    {% csrf_token %}
+                    <section class="form-section">
+                        <h3>Shipping Information</h3>
+                        {{ order_form.as_p }}
+                    </section>
+
+                    <section class="form-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-methods">
+                            {% for radio in payment_form.payment_method %}
+                            <div class="payment-method-item form-check">
+                                {{ radio.tag }}
+                                <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                    {{ radio.choice_label }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    <button type="submit" class="btn btn-primary btn-place-order">Place Order and Pay</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <a href="{% url 'clear_cart' %}" class="continue-shopping">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

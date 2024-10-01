@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render,redirect,get_object_or_404
-from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings,OrderDetails1,OrderedItems2
-from app1.forms import Orderform,Signup_form,Login_form,SearchForm,CommentForm,Ratings_Form
+from app1.models import Product,Order,Cart,CartItem,Ordered_items,OrderDetails,Comments,Ratings,OrderDetails1,OrderedItems2,Payment
+from app1.forms import Orderform,Signup_form,Login_form,SearchForm,CommentForm,Ratings_Form,PaymentForm
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .models import Cart, CartItem
@@ -268,10 +268,72 @@ def cart_view(request):
 
 @login_required
 def order_success(request):
-    return render(request, 'app1/order_success2.html')
+    return render(request, 'app1/order_success.html')
 
 
 
+
+
+
+# @login_required
+# def checkout(request):
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+#     cart_items = CartItem.objects.filter(cart=cart)
+#     total_price = cart.total_price
+
+#     if not cart_items.exists():
+#         messages.warning(request, "Your cart is empty. Add some items before checking out.")
+#         return redirect('cart_view')
+
+#     if request.method == 'POST':
+#         form = Orderform(request.POST)
+#         if form.is_valid():
+#             with transaction.atomic():
+#                 # Prepare items for the order
+#                 items = [
+#                     {
+#                         'product_name': item.product.product_name,
+#                         'quantity': item.quantity,
+#                         'price': item.product.price
+#                     }
+#                     for item in cart_items
+#                 ]
+
+#                 # Ensure items are not empty
+#                 if not items:
+#                     messages.error(request, "There are no items to order.")
+#                     return redirect('cart_view')
+
+#                 # Create a new Order
+#                 order = OrderedItems2(
+#                     user=request.user,
+#                     total_price=total_price
+#                 )
+
+#                 # Set the items for the order before saving
+#                 order.set_items(items)
+#                 order.save()
+
+#                 # Clear the cart
+#                 cart_items.delete()
+#                 cart.total_price = 0
+#                 cart.save()
+
+#             messages.success(request, "Your order has been placed successfully!")
+#             return redirect('order_success')
+#         else:
+#             messages.error(request, "There was an error with your order. Please check the form and try again.")
+#     else:
+#         form = Orderform()
+
+#     context = {
+#         'cart_items': cart_items,
+#         'total_price': total_price,
+#         'form': form,
+#         'all_items': cart_items,
+#     }
+
+#     return render(request, 'app1/final_page.html', context)
 
 
 
@@ -286,8 +348,9 @@ def checkout(request):
         return redirect('cart_view')
 
     if request.method == 'POST':
-        form = Orderform(request.POST)
-        if form.is_valid():
+        order_form = Orderform(request.POST)
+        payment_form = PaymentForm(request.POST)
+        if order_form.is_valid() and payment_form.is_valid():
             with transaction.atomic():
                 # Prepare items for the order
                 items = [
@@ -314,25 +377,39 @@ def checkout(request):
                 order.set_items(items)
                 order.save()
 
+                # Create and save the payment
+                payment = payment_form.save(commit=False)
+                payment.user = request.user
+                payment.order = order
+                payment.amount = total_price
+                payment.save()
+
+                # Update order status
+                order.status = 'ordered'
+                order.save()
+
                 # Clear the cart
                 cart_items.delete()
                 cart.total_price = 0
                 cart.save()
 
-            messages.success(request, "Your order has been placed successfully!")
+            messages.success(request, "Your order has been placed and payment processed successfully!")
             return redirect('order_success')
         else:
-            messages.error(request, "There was an error with your order. Please check the form and try again.")
+            messages.error(request, "There was an error with your order or payment. Please check the form and try again.")
     else:
-        form = Orderform()
+        order_form = Orderform()
+        payment_form = PaymentForm()
 
     context = {
         'cart_items': cart_items,
         'total_price': total_price,
-        'form': form,
+        'order_form': order_form,
+        'payment_form': payment_form,
+        'all_items': cart_items,
     }
 
-    return render(request, 'app1/final_page.html', context)
+    return render(request, 'app1/final_page2.html', context)
 
 
 
@@ -394,6 +471,42 @@ def search_view(request):
     
     # Ensure you return a response
     return render(request, 'app1/product_list.html', content)
+
+
+
+
+
+# @login_required
+# def payment_page(request, order_id):
+#     try:
+#         order = OrderedItems2.objects.get(id=order_id, user=request.user)
+#     except OrderedItems2.DoesNotExist:
+#         messages.error(request, "Order not found.")
+#         return redirect('order_history')  # Assuming you have an order history page
+
+#     if request.method == 'POST':
+#         form = PaymentForm(request.POST)
+#         if form.is_valid():
+#             payment = form.save(commit=False)
+#             payment.user = request.user
+#             payment.order = order
+#             payment.amount = order.total_price
+#             payment.save()
+
+#             # Update order status
+#             order.status = 'ordered'
+#             order.save()
+
+#             messages.success(request, "Payment successful!")
+#             return redirect('order_confirmation', order_id=order.id)  # Create this view
+#     else:
+#         form = PaymentForm()
+
+#     context = {
+#         'form': form,
+#         'order': order,
+#     }
+#     return render(request, 'app1/payment_page.html', context)
 
     
 

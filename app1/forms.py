@@ -1,14 +1,41 @@
-from app1.models import Order,Cart,CartItem,Comments,Ratings
+from app1.models import Order,Cart,CartItem,Comments,Ratings,Payment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-class Orderform(forms.ModelForm):
-   
+
+
+class PaymentForm(forms.ModelForm):
     class Meta:
-        model=Order
-        fields='__all__'
+        model = Payment
+        fields = ['payment_method']
+        widgets = {
+            'payment_method': forms.RadioSelect(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['payment_method'].initial = 'cod'
+
+
+# class Orderform(forms.ModelForm):
+   
+#     class Meta:
+#         model=Order
+#         fields='__all__'
+
+
+
+class Orderform(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(Orderform, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.error_messages = {'required': ''}
 
 class Signup_form(UserCreationForm):
     email=forms.EmailField(required=True)

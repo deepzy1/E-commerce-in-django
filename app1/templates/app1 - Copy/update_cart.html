@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Shopping</title>
+    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
+    <title>Update Cart</title>
+</head>
+<body>
+    <h1>Update Cart</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+        <style>
+            .continue-shopping {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #23527c;  /* Yellow color */
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+            
+            .continue-shopping:hover {
+                background-color: #FFC300;  /* Slightly darker yellow on hover */
+            }
+            </style>
+            
+            <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+    </form>
+    
+</body>
+</html>

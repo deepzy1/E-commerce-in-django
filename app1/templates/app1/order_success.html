@@ -1,116 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        
+        header nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .order-success-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .success-title {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .order-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .order-info, .product-details {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .product-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .product-item {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        
+        .product-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        
+        .total-price {
+            text-align: right;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .total-price span {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .btn-return-home {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 12px 0;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-return-home:hover {
+            background-color: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .order-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Success - Deepak Shopping</title>
-    <link rel="stylesheet" href="{% static 'app1/cart_style.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/order_success.css' %}">
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'app1/images/DG.JPG' %}" height="60px" alt="Home">
+            </a>
+        </nav>
+    </header>
 
-<header>
-    <nav>
-        <a href="{% url 'home' %}">
-            <img src="{% static 'app1/images/dd1.PNG' %}" height="60px" alt="Home">
-        </a>
-    </nav>
-</header>
+    <main class="order-success-container">
+        <h1 class="success-title">Order Placed Successfully!</h1>
+        <p class="success-message">Thank you for your purchase. Your order has been placed successfully.</p>
 
-<div class="order-success-container cart-container">
-    <h1>Order Success</h1>
-    <p class="success-message">Your order has been successfully placed!</p>
+        {% comment %} <div class="order-details-grid">
+            <section class="order-info">
+                <h2>Order Information</h2>
+                <ul>
+                    <li><strong>Name:</strong> {{ request.user.username }}</li>
+                    {% for user in form %}
+                    <li><strong>Email:</strong> {{ user.email }}</li>
+                    <li><strong>City:</strong> {{ user.city }}</li>
+                    <li><strong>State:</strong> {{ user.state }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
 
-    <div class="order-details">
-        <h2>Order Details</h2>
-        <ul>
-            <li>Name: {{ request.user.username }}</li>
-            {% for user in form %}
-            <li>{{ user.name }}</li>
-            <li>{{ user.email }}</li>
-            <li>{{ user.city }}</li>
-            <li>{{ user.state }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+            <section class="product-details">
+                <h2>Product Details</h2>
+                <ul class="product-list">
+                    {% for items in all_items %}
+                    <li class="product-item">
+                        <img src="{{ items.product.image.url }}" alt="{{ items.product.product_name }}" class="product-image">
+                        <div class="product-info">
+                            <h3>{{ items.product.product_name }}</h3>
+                            <p>Quantity: {{ items.quantity }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
 
-    <div class="product-details">
-        <h2>Product Details</h2>
-        <ul>
-            {% for items in all_items %}
-            <li>
-                <img src="{{ items.product.image.url }}" alt="{{ items.product.product_name }}" class="product-image">
-                <div class="product-info">
-                    <p>Product name: {{ items.product.product_name }}</p>
-                    <p>Number of products: {{ items.quantity }}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+        <div class="total-price">
+            <h2>Total Price: <span>₹{{ total_price }}</span></h2>
+        </div> {% endcomment %}
 
-    <div class="total-price">
-        <h3>Total Price:</h3>
-        <p>{{ total_price }}</p>
-    </div>
-
-    <p class="thank-you">Thank you for shopping with us!</p>
-    <a href="{% url 'home' %}" class="continue-shopping return-home">Return to Home</a>
-</div>
-
+        <a href="{% url 'home' %}" class="btn-return-home">Return to Home</a>
+    </main>
 </body>
 </html>
-
-
-
-
-
-{% comment %} <!DOCTYPE html> {% load static %}
-<html>
-<head>
-   
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>deepak.... Shopping</title>
-    <link rel="stylesheet" href="{% static 'app1/style.css' %}">
-    <title>Order Success</title>
-</head>
-<body>
-    <h1>Order Success</h1>
-    <p>Your order has been successfully placed!</p>
-    <p>Order Details:</p>
-    <ul>
-        <li>Name: {{ request.user.username }}</li>
-        {% for user in form  %}
-        <li>
-            {{user.name}}
-            {{user.email}}
-            {{user.city}}
-            {{user.state}}
-        </li>
-        
-        {% endfor %}
-        
-    </ul>
-    <h1>Order Success</h1>
-    <h2> Product details</h2>
-    <ul>
-        {% for items   in all_items  %}
-        <li>
-        {{ items.product.product_name}}
-        {{items.quantity}}
-        <h3> total price</h3> {{total_price}}
-        </li>
-
-        
-        {% endfor %}
-
-
-    </ul>
-    
-
-<p>Your order has been successfully placed!</p>
-    <p>Thank you for shopping with us!</p>
-    <a href="{% url 'home' %}">Return to Home</a>
-</body>
-</html> {% endcomment %}

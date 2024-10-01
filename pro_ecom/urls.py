@@ -43,7 +43,9 @@ urlpatterns = [
 
     path('rate_product/<int:product_id>/',rate_product,name='rate_product'),
     path('order-history/',order_history, name='order_history'),
-    path('order_succes/',order_success,name='order_success')
+    path('order_succes/',order_success,name='order_success'),
+    
+
 
 
 

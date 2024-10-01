@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Payment for Order #{{ order.id }}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Order Summary</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.get_items %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <th>${{ order.total_price }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Payment Method</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {% for radio in form.payment_method %}
+                    <div class="form-check">
+                        {{ radio.tag }}
+                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                            {{ radio.choice_label }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Confirm Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

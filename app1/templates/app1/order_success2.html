@@ -1,14 +1,79 @@
 
 
 {% block content %}
+<style>
+    /* Container and card styling */
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        border-radius: 15px;
+        padding: 30px;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 40px;
+    }
+
+    /* Heading style */
+    .card-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #28a745; /* Success green */
+        margin-bottom: 20px;
+    }
+
+    /* Text styling */
+    .card-text {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    /* Button styling */
+    .btn-success {
+        font-size: 1.1rem;
+        padding: 10px 30px;
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    /* Adjustments for mobile */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+        }
+
+        .btn-success {
+            font-size: 1rem;
+            padding: 10px 20px;
+        }
+    }
+</style>
+
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h2 class="card-title">Order Placed Successfully!</h2>
+                    <h2 class="card-title text-success">Order Placed Successfully!</h2>
                     <p class="card-text">Thank you for your purchase. Your order has been placed successfully.</p>
-                    <a href="{% url 'order_history' %}" class="btn btn-primary">View Order History</a>
+                    <a href="{% url 'order_history' %}" class="btn btn-success">View Order History</a>
                 </div>
             </div>
         </div>
