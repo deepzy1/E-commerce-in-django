@@ -108,6 +108,9 @@ def add_comment(request, product_id):
     return render(request, 'app1/comment.html', {'form': form, 'product': product})
 
 
+
+
+
 def edit_comment(request, pk):
     comment = get_object_or_404(Comments, pk=pk)
     if request.user != comment.user:
@@ -127,7 +130,7 @@ def edit_comment(request, pk):
         'product': product,
         'comment': comment
     }
-    return render(request, 'app1/comment.html', context)
+    return render(request, 'app1/comment_edit_delete.html', context)
 
 
 def delete_comment(request,pk):

@@ -160,7 +160,7 @@ class OrderedItems2(models.Model):
 
 
 
-from django.contrib.auth.models import User
+
 
 class Payment(models.Model):
     PAYMENT_METHODS = [
